@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Tools - Web & Mobile Accessibility</title>
+    <style>
+        :root {
+            /* Colors */
+            --color-navy-dark: #0a1e3d;
+            --color-navy: #163a5f;
+            --color-navy-light: #1e4976;
+            --color-blue-bright: #4aafef;
+            --color-blue-dark: #2b5876;
+            --color-teal: #32b8c6;
+            --color-white: #ffffff;
+            --color-gray-light: #a0aec0;
+            --color-gray: #718096;
+            
+            /* Font */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-navy) 50%, var(--color-navy-light) 100%);
+            color: var(--color-white);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 4rem;
+            background: rgba(10, 30, 61, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-gray-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--color-blue-bright);
+        }
+
+        /* Home Page */
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .icon-circle {
+            width: 120px;
+            height: 120px;
+            background: rgba(74, 175, 239, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .icon-circle svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--color-blue-bright);
+        }
+
+        .home-container h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .home-container p {
+            font-size: 1.1rem;
+            color: var(--color-gray-light);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--color-blue-bright);
+            color: var(--color-navy-dark);
+        }
+
+        .btn-primary:hover {
+            background: #5ec0ff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Tools Page */
+        .tools-container {
+            padding: 3rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tools-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tools-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tools-header p {
+            color: var(--color-gray-light);
+            font-size: 1.1rem;
+        }
+
+        /* Tool Statistics */
+        .tools-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-blue-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--color-gray-light);
+            font-weight: 500;
+        }
+
+        /* Filters */
+        .filters {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-white);
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--color-white);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .filter-group select option {
+            background: var(--color-navy);
+            color: var(--color-white);
+        }
+
+        .filter-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            padding: 0.625rem 1.5rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .tools-count {
+            color: var(--color-gray-light);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Tool Cards */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(74, 175, 239, 0.3);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            background: rgba(74, 175, 239, 0.2);
+            color: var(--color-blue-bright);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .tool-description {
+            color: var(--color-gray-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .tool-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .info-label {
+            color: var(--color-gray-light);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--color-white);
+            font-weight: 600;
+        }
+
+        .info-value.paid {
+            color: #ff6b6b;
+        }
+
+        .info-value.free {
+            color: #51cf66;
+        }
+
+        .tool-features {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .tool-features h4 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-white);
+        }
+
+        .tool-features ul {
+            list-style: none;
+            font-size: 0.875rem;
+            color: var(--color-gray-light);
+        }
+
+        .tool-features li {
+            padding-left: 1rem;
+            position: relative;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-features li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-bright);
+        }
+
+        .btn-visit-tool {
+            width: 100%;
+            background: var(--color-blue-bright);
+            color: var(--color-navy-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .btn-visit-tool:hover {
+            background: #5ec0ff;
+            transform: translateY(-2px);
+        }
+
+        .btn-visit-tool svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* About Page */
+        .about-container {
+            padding: 3rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            margin-bottom: 3rem;
+        }
+
+        .about-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-blue-bright);
+        }
+
+        .about-section p {
+            color: var(--color-gray-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .about-content-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .about-content-card h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-blue-bright);
+        }
+
+        .about-content-card p {
+            color: var(--color-gray-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .about-content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .standards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .standard-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .standard-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-blue-bright);
+        }
+
+        .standard-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Contact Page */
+        .contact-container {
+            padding: 3rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .contact-container .subtitle {
+            text-align: center;
+            color: var(--color-gray-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-white);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--color-white);
+            font-size: 1rem;
+            font-family: var(--font-family);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-blue-bright);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--color-blue-bright);
+            color: var(--color-navy-dark);
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #5ec0ff;
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--color-blue-bright);
+        }
+
+        .contact-info p {
+            color: var(--color-gray-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .home-container h1 {
+                font-size: 2.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tools-container,
+            .about-container,
+            .contact-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .tools-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Accessibility Tools</div>
+        <ul class="nav-links">
+            <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
+            <li><a href="#" data-page="tools" class="nav-link">Tools</a></li>
+            <li><a href="#" data-page="about" class="nav-link">About</a></li>
+            <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page">
+        <div class="home-container">
+            <div class="icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+                </svg>
+            </div>
+            <h1>Web & Mobile Accessibility<br>Tools</h1>
+            <p>Discover and explore comprehensive tools for web and mobile accessibility. Our curated collection helps developers, designers, and organizations create inclusive digital experiences that work for everyone.</p>
+            <div class="button-group">
+                <a href="#" class="btn btn-primary" data-page="tools">
+                    Explore Tools
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-secondary" data-page="about">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tools Page -->
+    <div id="tools-page" class="page hidden">
+        <div class="tools-container">
+            <div class="tools-header">
+                <h1>Accessibility Tools Catalog</h1>
+                <p>Browse our comprehensive collection of accessibility tools for web and mobile development.</p>
+            </div>
+
+            <!-- Tool Statistics -->
+            <div class="tools-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-tools">0</div>
+                    <div class="stat-label">Total Tools</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="free-tools">0</div>
+                    <div class="stat-label">Free Tools</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="paid-tools">0</div>
+                    <div class="stat-label">Paid Tools</div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="">All Categories</option>
+                            <option value="static-dynamic">Static & Dynamic</option>
+                            <option value="static">Static Tools</option>
+                            <option value="dynamic">Dynamic Tools</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="platform">Platform</label>
+                        <select id="platform">
+                            <option value="">All Platforms</option>
+                            <option value="ios">iOS</option>
+                            <option value="android">Android</option>
+                            <option value="web">Web</option>
+                            <option value="mobile">Mobile</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="wcag">WCAG Level</label>
+                        <select id="wcag">
+                            <option value="">All WCAG Levels</option>
+                            <option value="A">A</option>
+                            <option value="AA">AA</option>
+                            <option value="AAA">AAA</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="pricing">Pricing</label>
+                        <select id="pricing">
+                            <option value="">All Pricing</option>
+                            <option value="free">Free</option>
+                            <option value="paid">Paid</option>
+                            <option value="trial">Trial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-reset" id="reset-filters">Reset All</button>
+                </div>
+            </div>
+
+            <div class="tools-count">Showing <span id="tool-count">0</span> tools</div>
+
+            <div id="tools-list"></div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about-page" class="page hidden">
+        <div class="about-container">
+            <div class="about-section">
+                <h1>About Accessibility Tools</h1>
+                <p>Welcome to the Accessibility Tools Catalog - your comprehensive resource for discovering and implementing web and mobile accessibility solutions.</p>
+            </div>
+
+            <div class="about-content-card">
+                <h2>Our Mission</h2>
+                <p>We believe that the digital world should be accessible to everyone, regardless of their abilities. Our mission is to empower developers, designers, and organizations with the right tools to create inclusive digital experiences that work for all users.</p>
+                <p>By providing a curated collection of accessibility testing and implementation tools, we aim to make it easier for teams to integrate accessibility into their development workflows from day one.</p>
+            </div>
+
+            <div class="about-content-card">
+                <h2>Our Goals</h2>
+                <p><strong>Simplify Discovery:</strong> Help teams find the right accessibility tools for their specific needs, whether they're building native mobile apps, web applications, or cross-platform solutions.</p>
+                <p><strong>Promote Best Practices:</strong> Encourage the adoption of accessibility standards and best practices across the industry by making tools more discoverable and easier to evaluate.</p>
+                <p><strong>Foster Inclusion:</strong> Support the creation of digital products that are usable by people with diverse abilities, including those with visual, auditory, motor, and cognitive disabilities.</p>
+            </div>
+
+            <div class="about-content-card">
+                <h2>Why Accessibility Matters</h2>
+                <p>Over 1 billion people worldwide live with some form of disability. Accessible design isn't just about compliance—it's about creating better experiences for everyone. Features designed for accessibility often improve usability for all users.</p>
+                <p>Beyond the moral imperative, accessibility also makes business sense: accessible websites reach wider audiences, improve SEO, reduce legal risks, and demonstrate corporate social responsibility.</p>
+            </div>
+
+            <div class="about-section">
+                <h2 style="margin-bottom: 1.5rem;">Accessibility Standards</h2>
+                <p style="margin-bottom: 2rem;">Our catalog includes tools that support various accessibility standards and guidelines. Understanding these standards is crucial for building truly accessible digital experiences.</p>
+                
+                <div class="standards-grid">
+                    <div class="standard-card">
+                        <h3>WCAG 2.0</h3>
+                        <p>Web Content Accessibility Guidelines 2.0 provides recommendations for making web content more accessible to people with disabilities.</p>
+                    </div>
+                    <div class="standard-card">
+                        <h3>WCAG 2.1</h3>
+                        <p>An extension of WCAG 2.0, adding new success criteria to address mobile accessibility, people with low vision, and cognitive disabilities.</p>
+                    </div>
+                    <div class="standard-card">
+                        <h3>Level A</h3>
+                        <p>The minimum level of conformance. Addresses the most basic web accessibility features.</p>
+                    </div>
+                    <div class="standard-card">
+                        <h3>Level AA</h3>
+                        <p>The recommended level of conformance. Addresses the biggest and most common barriers for disabled users.</p>
+                    </div>
+                    <div class="standard-card">
+                        <h3>Level AAA</h3>
+                        <p>The highest level of conformance. Provides the highest level of accessibility for users.</p>
+                    </div>
+                    <div class="standard-card">
+                        <h3>Section 508</h3>
+                        <p>U.S. federal law requiring federal agencies to make their electronic information accessible to people with disabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page hidden">
+        <div class="contact-container">
+            <h1>Contact Us</h1>
+            <p class="subtitle">Have questions or suggestions? We'd love to hear from you!</p>
+
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required placeholder="How can we help?">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell us more..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+
+            <div class="contact-info">
+                <h3>Other Ways to Reach Us</h3>
+                <p><strong>Email:</strong> info@accessibilitytools.com</p>
+                <p><strong>Follow us:</strong> @AccessibilityTools</p>
+                <p>We typically respond within 24-48 hours.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tools data
+        const toolsData = [
+            // Static & Dynamic Tools
+            {
+                name: "Google Scanner for A11y",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Objective-C library that sits in an iOS app's process scanning it for accessibility issues before developers write tests.",
+                platform: "IOS-PLUGIN",
+                wcagLevel: ["AA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://github.com/google/GSCXScanner",
+                features: [
+                    "Automated scanning of iOS applications",
+                    "Integration with development workflow",
+                    "Comprehensive accessibility reporting"
+                ]
+            },
+            {
+                name: "a11yTools for IOS",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "iOS app that takes screenshots and tests them for accessibility issues.",
+                platform: "IOS",
+                wcagLevel: ["AA"],
+                guideline: "WCAG 2.0",
+                pricing: "Paid",
+                type: "All Accessibility Issues",
+                url: "https://apps.apple.com/us/app/a11ytools-web-accessibility/id1356241530",
+                features: [
+                    "Screenshot-based testing",
+                    "Automated issue detection",
+                    "Detailed accessibility reports"
+                ]
+            },
+            {
+                name: "TestDevLab",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Comprehensive testing for keyboard navigation, screen readers, links, captions, form labels, and text alternatives.",
+                platform: "Mobile/Web",
+                wcagLevel: ["A", "AA"],
+                guideline: "WCAG 2.1",
+                pricing: "Paid",
+                type: "Keyboard Navigation",
+                url: "https://www.testdevlab.com/solutions/accessibility-testing",
+                features: [
+                    "Multi-platform testing support",
+                    "Keyboard navigation validation",
+                    "Screen reader compatibility testing"
+                ]
+            },
+            {
+                name: "Sofy",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "All-in-one accessibility testing solution for mobile applications with comprehensive coverage.",
+                platform: "Android/IOS",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.0",
+                pricing: "Paid",
+                type: "All Accessibility Issues",
+                url: "https://start.sofy.ai/no-code-mobile-apps-testing-1",
+                features: [
+                    "Cross-platform mobile testing",
+                    "Complete WCAG compliance testing",
+                    "Automated and manual testing options"
+                ]
+            },
+            {
+                name: "IOS Color Contrast Checker",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Specialized tool for testing color contrast ratios in iOS applications.",
+                platform: "IOS",
+                wcagLevel: ["AA"],
+                guideline: "WCAG 2.0",
+                pricing: "Trial",
+                type: "Color Contrasts",
+                url: "https://apps.apple.com/na/app/color-contrast/id1095478187",
+                features: [
+                    "Real-time contrast ratio calculation",
+                    "WCAG compliance verification",
+                    "Easy integration with design workflow"
+                ]
+            },
+            {
+                name: "Deque",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Enterprise-grade accessibility testing platform for mobile and web applications.",
+                platform: "Android/IOS",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.0",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://www.deque.com/blog/accessibility-testing-for-the-mobile-web/",
+                features: [
+                    "Enterprise-level testing capabilities",
+                    "Comprehensive reporting and analytics",
+                    "Integration with CI/CD pipelines"
+                ]
+            },
+            {
+                name: "ThePacielloGroup",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Industry-leading accessibility consulting and testing solutions for color contrast and comprehensive accessibility audits.",
+                platform: "Windows/Mac",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "Color Contrast",
+                url: "https://github.com/ThePacielloGroup/CCAe",
+                features: [
+                    "Professional accessibility auditing",
+                    "Color contrast analysis tools",
+                    "Expert consultation services"
+                ]
+            },
+            {
+                name: "Tenon.io",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Cloud-based accessibility testing API for continuous integration and automated testing workflows.",
+                platform: "Webapp",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Paid/Free Trial",
+                type: "Accessibility Issues",
+                url: "https://tenon.io/",
+                features: [
+                    "API-based accessibility testing",
+                    "CI/CD integration support",
+                    "Detailed violation reporting"
+                ]
+            },
+            {
+                name: "Dyslexia Simulator",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Web-based tool that simulates dyslexia to help designers understand reading challenges.",
+                platform: "Webapp",
+                wcagLevel: ["A"],
+                guideline: "WGAC1",
+                pricing: "Free",
+                type: "Dyslexia Issues",
+                url: "https://tll.gse.harvard.edu/dyslexia-simulator",
+                features: [
+                    "Real-time dyslexia simulation",
+                    "Educational awareness tool",
+                    "Design empathy building"
+                ]
+            },
+            {
+                name: "ZoomText",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Screen magnification and text-to-speech software for users with low vision.",
+                platform: "Webapp",
+                wcagLevel: ["A"],
+                guideline: "WGAC1",
+                pricing: "Paid",
+                type: "Text Zoom",
+                url: "https://www.freedomscientific.com/products/software/zoomtext/",
+                features: [
+                    "Powerful screen magnification",
+                    "Text-to-speech functionality",
+                    "Customizable visual enhancements"
+                ]
+            },
+            {
+                name: "nocoffee",
+                category: "static-dynamic",
+                badge: "Static & Dynamic",
+                description: "Browser extension that simulates various vision problems to test website accessibility for users with low vision.",
+                platform: "Webapp",
+                wcagLevel: ["AA"],
+                guideline: "WCAG 2.1",
+                pricing: "Paid",
+                type: "Vision Issues - Low",
+                url: "https://uxpro.cc/toolbox/nocoffee/",
+                features: [
+                    "Multiple vision impairment simulations",
+                    "Browser extension convenience",
+                    "Real-time website testing"
+                ]
+            },
+            // Static Tools
+            {
+                name: "Flow Analyzer for Mobile",
+                category: "static",
+                badge: "Static Testing",
+                description: "Analyzes mobile app flows to identify missing accessible labels and navigation issues.",
+                platform: "Android/IOS",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Paid",
+                type: "Missing Accessible labels",
+                url: "https://www.evinced.com/products/flow-analyzer-mobile/",
+                features: [
+                    "User flow analysis",
+                    "Label coverage reporting",
+                    "Navigation structure validation"
+                ]
+            },
+            {
+                name: "Applause",
+                category: "static",
+                badge: "Static Testing",
+                description: "Static analysis tool for testing navigation bars, radio buttons, and interactive elements.",
+                platform: "Android/IOS",
+                wcagLevel: ["A"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "Navigation bars, radio",
+                url: "https://www.applause.com/pg/key-accessibility-improvements-for-web-development",
+                features: [
+                    "UI component accessibility testing",
+                    "Interactive element validation",
+                    "Design pattern compliance checking"
+                ]
+            },
+            {
+                name: "Lint",
+                category: "static",
+                badge: "Static Testing",
+                description: "Android lint tool for detecting correctness, usability, and accessibility issues in code.",
+                platform: "Android",
+                wcagLevel: ["A"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "Correctness, Usability",
+                url: "https://developer.android.com/studio/write/lint",
+                features: [
+                    "Code-level accessibility checks",
+                    "Integration with Android Studio",
+                    "Automated issue detection"
+                ]
+            },
+            {
+                name: "Accessibility Inspector",
+                category: "static",
+                badge: "Static Testing",
+                description: "Apple's built-in tool for inspecting accessibility properties and testing iOS apps.",
+                platform: "IOS",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://developer.apple.com/library/archive/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html",
+                features: [
+                    "Native iOS integration",
+                    "Real-time property inspection",
+                    "Accessibility hierarchy visualization"
+                ]
+            },
+            {
+                name: "VoiceOver/Vision",
+                category: "static",
+                badge: "Static Testing",
+                description: "iOS screen reader and accessibility features for testing app compatibility.",
+                platform: "IOS",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.0",
+                pricing: "Free",
+                type: "Screen reader, Volume",
+                url: "https://www.apple.com/in/accessibility/vision/",
+                features: [
+                    "Screen reader testing",
+                    "Gesture-based navigation validation",
+                    "Audio feedback testing"
+                ]
+            },
+            {
+                name: "Accessibility Scanner",
+                category: "static",
+                badge: "Static Testing",
+                description: "Google's tool for scanning Android apps to identify accessibility improvements.",
+                platform: "Android",
+                wcagLevel: ["A", "AA"],
+                guideline: "WCAG 2.0",
+                pricing: "Free",
+                type: "Small Touch targets",
+                url: "https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor",
+                features: [
+                    "Touch target size validation",
+                    "Content labeling suggestions",
+                    "Quick accessibility insights"
+                ]
+            },
+            {
+                name: "A11Y Color Contrast Accessibility Validator",
+                category: "static",
+                badge: "Static Testing",
+                description: "Validates color contrast ratios to ensure text readability for users with visual impairments.",
+                platform: "WebApp",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WCAG",
+                pricing: "Free",
+                type: "Colour Contrast",
+                url: "https://www.audioeye.com/color-contrast-checker/",
+                features: [
+                    "Instant contrast ratio calculation",
+                    "WCAG compliance checking",
+                    "Color picker integration"
+                ]
+            },
+            {
+                name: "Accessible Brand Colors",
+                category: "static",
+                badge: "Static Testing",
+                description: "Tool for finding accessible color combinations that meet WCAG guidelines for brand colors.",
+                platform: "WebApp",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WCAG",
+                pricing: "Free",
+                type: "Colour Contrast",
+                url: "https://abc.useallfive.com/",
+                features: [
+                    "Brand color accessibility analysis",
+                    "Alternative color suggestions",
+                    "WCAG conformance validation"
+                ]
+            },
+            {
+                name: "Accessible color Evaluator",
+                category: "static",
+                badge: "Static Testing",
+                description: "Comprehensive color accessibility evaluation tool for designers and developers.",
+                platform: "WebApp",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WCAG",
+                pricing: "Free",
+                type: "Colour Contrast",
+                url: "https://www.garrethtigwell.com/ACE/ace/",
+                features: [
+                    "Multi-level WCAG testing",
+                    "Interactive color adjustment",
+                    "Export accessibility reports"
+                ]
+            },
+            {
+                name: "AccessMonitor",
+                category: "static",
+                badge: "Static Testing",
+                description: "Automated web accessibility monitoring and evaluation service for ongoing compliance.",
+                platform: "WebApp",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://accessmonitor.acessibilidade.gov.pt/",
+                features: [
+                    "Continuous accessibility monitoring",
+                    "Automated compliance reports",
+                    "Multi-page website scanning"
+                ]
+            },
+            {
+                name: "aCe by accessiBe",
+                category: "static",
+                badge: "Static Testing",
+                description: "Free accessibility checker that provides instant WCAG compliance analysis.",
+                platform: "WebApp",
+                wcagLevel: ["AA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://accessibe.com/accessscan",
+                features: [
+                    "One-click accessibility scan",
+                    "Detailed issue breakdown",
+                    "Remediation guidance"
+                ]
+            },
+            {
+                name: "Bookmarklets for accessibility testing",
+                category: "static",
+                badge: "Static Testing",
+                description: "Collection of JavaScript bookmarklets for quick accessibility testing in any browser.",
+                platform: "WebApp",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "Various Tests",
+                url: "https://pauljadam.com/bookmarklets/",
+                features: [
+                    "Quick browser-based testing",
+                    "No installation required",
+                    "Multiple test types available"
+                ]
+            },
+            {
+                name: "Contrast",
+                category: "static",
+                badge: "Static Testing",
+                description: "macOS app for testing color contrast ratios to ensure WCAG compliance.",
+                platform: "MacOS",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WCAG",
+                pricing: "Free",
+                type: "Color Contrast",
+                url: "https://apps.apple.com/de/app/contrasts/id1515015989",
+                features: [
+                    "Native macOS integration",
+                    "Real-time contrast checking",
+                    "Color picker support"
+                ]
+            },
+            // Dynamic Tools
+            {
+                name: "accessibility-insights",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Microsoft's comprehensive accessibility testing tool for web and desktop applications.",
+                platform: "Chrome",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://accessibilityinsights.io/",
+                features: [
+                    "Browser extension for Chrome",
+                    "Automated and guided testing",
+                    "Detailed issue explanations"
+                ]
+            },
+            {
+                name: "Android Accessibility Suite",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Comprehensive suite including TalkBack, Select to Speak, and Switch Access for Android.",
+                platform: "Android",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "Screen reader, Volume",
+                url: "https://play.google.com/store/apps/details?id=com.google.android.marvin.talkback",
+                features: [
+                    "Complete Android accessibility toolkit",
+                    "Multiple interaction modes",
+                    "Built-in Android integration"
+                ]
+            },
+            {
+                name: "UBKAccessibilityKit",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Web accessibility testing kit with dynamic analysis capabilities.",
+                platform: "IOS - Library",
+                wcagLevel: ["AA", "AAA"],
+                guideline: "WGAC1",
+                pricing: "Free",
+                type: "This web accessibility",
+                url: "https://github.com/NAB/UBKAccessibilityKit",
+                features: [
+                    "Dynamic content testing",
+                    "JavaScript accessibility validation",
+                    "ARIA implementation testing"
+                ]
+            },
+            {
+                name: "Touchscreen repair",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Tool for testing and validating touchscreen accessibility and responsiveness.",
+                platform: "Android",
+                wcagLevel: ["AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "touchscreen",
+                url: "https://play.google.com/store/apps/details?id=apps.redpi.touchscreenrepair",
+                features: [
+                    "Touch gesture testing",
+                    "Response time validation",
+                    "Multi-touch support verification"
+                ]
+            },
+            {
+                name: "Axe Android",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Industry-leading accessibility testing engine for Android and web applications.",
+                platform: "Web and Android",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://github.com/dequelabs/axe-android",
+                features: [
+                    "Fast and accurate testing",
+                    "Zero false positives",
+                    "Developer-friendly API"
+                ]
+            },
+            {
+                name: "TPGi",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Professional accessibility testing platform for web applications.",
+                platform: "Webapp",
+                wcagLevel: ["A", "AA"],
+                guideline: "WCAG 2.1",
+                pricing: "Free Tier",
+                type: "missing labels, duplicate",
+                url: "https://www.tpgi.com/device-accessibility-testing/",
+                features: [
+                    "Automated testing capabilities",
+                    "Expert consultation available",
+                    "Compliance reporting"
+                ]
+            },
+            {
+                name: "Accessible Web Helper for Chrome",
+                category: "dynamic",
+                badge: "Dynamic Testing",
+                description: "Chrome extension that identifies accessibility issues and provides fix suggestions in real-time.",
+                platform: "Chrome",
+                wcagLevel: ["A", "AA", "AAA"],
+                guideline: "WCAG 2.0, 2.1",
+                pricing: "Free",
+                type: "All Accessibility Issues",
+                url: "https://chromewebstore.google.com/detail/accessible-web-helper/gdnpkbipbholkoaggmlblpbmgemddbgb",
+                features: [
+                    "Real-time accessibility scanning",
+                    "In-browser issue highlighting",
+                    "Quick fix recommendations"
+                ]
+            }
+        ];
+
+        // Calculate statistics
+        function calculateStats(tools) {
+            const total = tools.length;
+            const free = tools.filter(t => t.pricing.toLowerCase().includes('free')).length;
+            const paid = tools.filter(t => t.pricing.toLowerCase().includes('paid') && !t.pricing.toLowerCase().includes('free')).length;
+            
+            return { total, free, paid };
+        }
+
+        // Update statistics display
+        function updateStats(tools) {
+            const stats = calculateStats(tools);
+            document.getElementById('total-tools').textContent = stats.total;
+            document.getElementById('free-tools').textContent = stats.free;
+            document.getElementById('paid-tools').textContent = stats.paid;
+        }
+
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        function showPage(pageName) {
+            pages.forEach(page => page.classList.add('hidden'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(`${pageName}-page`).classList.remove('hidden');
+            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+
+            if (pageName === 'tools') {
+                renderTools(toolsData);
+                updateStats(toolsData);
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                showPage(page);
+            });
+        });
+
+        // Handle button clicks from home page
+        document.querySelectorAll('.btn[data-page]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = btn.getAttribute('data-page');
+                showPage(page);
+            });
+        });
+
+        // Render tools
+        function renderTools(tools) {
+            const toolsList = document.getElementById('tools-list');
+            const categories = ['static-dynamic', 'static', 'dynamic'];
+            
+            toolsList.innerHTML = '';
+            
+            categories.forEach(category => {
+                const categoryTools = tools.filter(tool => tool.category === category);
+                if (categoryTools.length > 0) {
+                    const categoryTitle = category === 'static-dynamic' ? 'Static & Dynamic Tools' : 
+                                        category === 'static' ? 'Static Tools' : 'Dynamic Tools';
+                    
+                    const categorySection = document.createElement('div');
+                    categorySection.innerHTML = `<h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--color-blue-bright);">${categoryTitle}</h2>`;
+                    
+                    const grid = document.createElement('div');
+                    grid.className = 'tools-grid';
+                    
+                    categoryTools.forEach(tool => {
+                        const card = createToolCard(tool);
+                        grid.appendChild(card);
+                    });
+                    
+                    categorySection.appendChild(grid);
+                    toolsList.appendChild(categorySection);
+                }
+            });
+            
+            updateToolCount(tools.length);
+        }
+
+        function createToolCard(tool) {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+            card.setAttribute('data-category', tool.category);
+            card.setAttribute('data-platform', tool.platform.toLowerCase());
+            card.setAttribute('data-wcag', tool.wcagLevel.join(',').toLowerCase());
+            card.setAttribute('data-pricing', tool.pricing.toLowerCase());
+            
+            const pricingClass = tool.pricing.toLowerCase().includes('free') ? 'free' : 
+                                tool.pricing.toLowerCase().includes('paid') ? 'paid' : '';
+            
+            card.innerHTML = `
+                <div class="tool-header">
+                    <div>
+                        <h3>${tool.name}</h3>
+                    </div>
+                    <span class="badge">${tool.badge}</span>
+                </div>
+                <p class="tool-description">${tool.description}</p>
+                <div class="tool-info">
+                    <div class="info-row">
+                        <span class="info-label">Platform</span>
+                        <span class="info-value">${tool.platform}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">WCAG Level</span>
+                        <span class="info-value">${tool.guideline} ${tool.wcagLevel.join(' & ')}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Pricing</span>
+                        <span class="info-value ${pricingClass}">${tool.pricing}</span>
+                    </div>
+                </div>
+                <div class="tool-features">
+                    <h4>Key Features:</h4>
+                    <ul>
+                        ${tool.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                </div>
+                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="btn-visit-tool">
+                    Visit Tool
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                    </svg>
+                </a>
+            `;
+            
+            return card;
+        }
+
+        function updateToolCount(count) {
+            document.getElementById('tool-count').textContent = count;
+        }
+
+        // Filters
+        const categoryFilter = document.getElementById('category');
+        const platformFilter = document.getElementById('platform');
+        const wcagFilter = document.getElementById('wcag');
+        const pricingFilter = document.getElementById('pricing');
+        const resetBtn = document.getElementById('reset-filters');
+
+        function applyFilters() {
+            const category = categoryFilter.value;
+            const platform = platformFilter.value.toLowerCase();
+            const wcag = wcagFilter.value.toLowerCase();
+            const pricing = pricingFilter.value.toLowerCase();
+
+            let filtered = toolsData;
+
+            if (category) {
+                filtered = filtered.filter(tool => tool.category === category);
+            }
+            if (platform) {
+                filtered = filtered.filter(tool => tool.platform.toLowerCase().includes(platform));
+            }
+            if (wcag) {
+                filtered = filtered.filter(tool => tool.wcagLevel.map(l => l.toLowerCase()).includes(wcag));
+            }
+            if (pricing) {
+                filtered = filtered.filter(tool => tool.pricing.toLowerCase().includes(pricing));
+            }
+
+            renderTools(filtered);
+            updateStats(filtered);
+        }
+
+        categoryFilter.addEventListener('change', applyFilters);
+        platformFilter.addEventListener('change', applyFilters);
+        wcagFilter.addEventListener('change', applyFilters);
+        pricingFilter.addEventListener('change', applyFilters);
+
+        resetBtn.addEventListener('click', () => {
+            categoryFilter.value = '';
+            platformFilter.value = '';
+            wcagFilter.value = '';
+            pricingFilter.value = '';
+            renderTools(toolsData);
+            updateStats(toolsData);
+        });
+
+        // Contact form
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+
+        // Initialize
+        renderTools(toolsData);
+        updateStats(toolsData);
+    </script>
+</body>
+</html>
